@@ -6,8 +6,10 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,12 +20,15 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         CardView card;
         TextView text;
         ImageView image;
+        Button btnVer;
 
         public SeriesViewHolder(View itemView){
             super(itemView);
             card = itemView.findViewById(R.id.card_view);
             text = itemView.findViewById(R.id.text_title);
             image = itemView.findViewById(R.id.img);
+            btnVer = itemView.findViewById(R.id.btn_ver);
+
         }
     }
 
@@ -38,13 +43,21 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     }
 
     @Override
-    public void onBindViewHolder(SeriesViewHolder holder, int position) {
+    public void onBindViewHolder(final SeriesViewHolder holder, final int position) {
         holder.text.setText(series.get(position).getName());
         holder.image.setImageResource(series.get(position).getImg());
+        holder.btnVer.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(v.getContext(),series.get(position).getDesc(),Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return series.size();
     }
+
 }
